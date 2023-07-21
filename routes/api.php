@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DisciplinaController;
-use App\Http\Controllers\TarefaController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NotasController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +23,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('categoria', CategoriaController::class);
-Route::apiResource('disciplina', DisciplinaController::class);
-Route::apiResource('tarefa', TarefaController::class);
+Route::middleware('jwt-auth')->group(function(){
+    Route::apiResource('categoria', CategoriaController::class);
+    Route::apiResource('disciplina', DisciplinaController::class);
+    Route::apiResource('notas', NotasController::class);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('me', [AuthController::class, 'me']);
+    // Route::post('refresh', [AuthController::class, 'refresh']);
+});
+
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [UserController::class, 'register']);

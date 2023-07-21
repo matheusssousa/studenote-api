@@ -8,9 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Disciplina extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome'];
+    protected $fillable = ['nome', 'user_id'];
 
-    public function tarefas(){
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function tarefas()
+    {
         return $this->belongsTo(Tarefa::class);
     }
 }

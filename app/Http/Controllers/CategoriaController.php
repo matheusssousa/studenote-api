@@ -8,18 +8,14 @@ use App\Http\Requests\UpdateCategoriaRequest;
 
 class CategoriaController extends Controller
 {
-    // public function __construct(Categoria $categoria)
-    // {
-    //     $this->categoria = $categoria;
-    // }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       $categoria = Categoria::all();
+        $categoria = Categoria::where('user_id', auth()->user()->id)->get();
 
-       return response()->json($categoria, 200);
+        return response()->json($categoria, 200);
     }
 
     /**
@@ -38,6 +34,7 @@ class CategoriaController extends Controller
         $categoria = new Categoria();
         $categoria->nome = $request->nome;
         $categoria->cor = $request->cor;
+        $categoria->user_id = auth()->user()->id;
         $categoria->save();
 
         return response()->json($categoria, 201);
@@ -49,11 +46,15 @@ class CategoriaController extends Controller
     public function show($id)
     {
         $categoria = Categoria::find($id);
-        
+
+        if ($categoria->user_id == auth()->user()->id) {
+            return response()->json($categoria, 200);
+        } else {
+            return response()->json(['erro' => 'Não disponível para você']);
+        }
+
         //PARA CONSEGUIR AS INFORMAÇÕES DAS TAREFAS QUE CONTEM A CATEGORIA
         //$categoria = Categoria::with('tarefa')->find($id);
-
-        return response()->json($categoria, 200);
     }
 
     /**
@@ -71,13 +72,13 @@ class CategoriaController extends Controller
     {
         $categoria = Categoria::find($id);
 
-        if ($categoria === null) {
+        if ($categoria === null || $categoria->user_id != auth()->user()->id) {
             return response()->json(['erro' => 'Não foi possível efetuar a atualização, o registro buscado não existe.']);
         }
 
         $categoria->fill($request->all());
         $categoria->save();
-        
+
         return response()->json($categoria, 200);
     }
 
@@ -88,7 +89,7 @@ class CategoriaController extends Controller
     {
         $categoria = Categoria::find($id);
 
-        if ($categoria === null) {
+        if ($categoria === null || $categoria->user_id != auth()->user()->id) {
             return response()->json(['erro' => 'Não foi possível efetuar a exclusão, o registro buscado não existe.']);
         }
 

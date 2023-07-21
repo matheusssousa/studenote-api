@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoriasTarefa;
-use App\Http\Requests\StoreCategoriasTarefaRequest;
-use App\Http\Requests\UpdateCategoriasTarefaRequest;
+use App\Models\CategoriaNota;
+use App\Http\Requests\StoreCategoriaNotaRequest;
+use App\Http\Requests\UpdateCategoriaNotaRequest;
 
-class CategoriasTarefaController extends Controller
+class CategoriaNotaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class CategoriasTarefaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoriasTarefaRequest $request)
+    public function store(StoreCategoriaNotaRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class CategoriasTarefaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CategoriasTarefa $categoriasTarefa)
+    public function show(CategoriaNota $categoriaNota)
     {
         //
     }
@@ -43,7 +43,7 @@ class CategoriasTarefaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CategoriasTarefa $categoriasTarefa)
+    public function edit(CategoriaNota $categoriaNota)
     {
         //
     }
@@ -51,7 +51,7 @@ class CategoriasTarefaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoriasTarefaRequest $request, CategoriasTarefa $categoriasTarefa)
+    public function update(UpdateCategoriaNotaRequest $request, CategoriaNota $categoriaNota)
     {
         //
     }
@@ -59,7 +59,7 @@ class CategoriasTarefaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CategoriasTarefa $categoriasTarefa)
+    public function destroy(CategoriaNota $categoriaNota)
     {
         //
     }

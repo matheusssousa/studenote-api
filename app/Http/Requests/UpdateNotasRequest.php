@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTarefaRequest extends FormRequest
+class UpdateNotasRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class StoreTarefaRequest extends FormRequest
         return [
             'nome' => 'required|min:3',
             'descricao' => 'required|max:200',
-            'id_categoria' => 'exists:categorias,id'
+            'id_categoria' => 'exists:categorias,id',
         ];
     }
 }

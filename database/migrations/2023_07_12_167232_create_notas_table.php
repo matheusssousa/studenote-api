@@ -6,20 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('categorias', function (Blueprint $table) {
+        Schema::create('notas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nome', 30);
-            $table->string('cor', 7);
+            $table->string('nome', 50);
+            $table->string('descricao', 150);
+            $table->date('data_prazo')->nullable();
+            $table->unsignedBigInteger('disciplina_id');
             $table->unsignedBigInteger('user_id');  
 
-            // //CHAVE ESTRANGEIRA DE USUÁRIO
+            // CHAVE ESTRANGEIRA DE USUÁRIO
             $table->foreign('user_id')->references('id')->on('users');
+            //CHAVE ESTRANGEIRA DE DISCIPLINA
+            $table->foreign('disciplina_id')->references('id')->on('disciplinas');
         });
     }
 
@@ -29,7 +33,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('notas');
         Schema::enableForeignKeyConstraints();
     }
 };
