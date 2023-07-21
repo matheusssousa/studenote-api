@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTarefaRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class UpdateTarefaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|min:3',
-            'descricao' => 'required|max:200',
-            'id_categoria' => 'exists:categorias,id'
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|min:8',
         ];
     }
 }

@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nome', 50);
+            $table->unsignedBigInteger('user_id');  
+
+            // //CHAVE ESTRANGEIRA DE USUÁRIO
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -23,6 +27,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('disciplinas');
+        Schema::enableForeignKeyConstraints();
     }
 };

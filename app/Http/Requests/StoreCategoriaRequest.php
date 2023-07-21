@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCategoriaRequest extends FormRequest
 {
@@ -22,7 +24,13 @@ class StoreCategoriaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|min:3|unique:categorias,nome,'.$this->id.''
+            'nome' => [
+                'required',
+                'min:3',
+                // FUNÇÃO ESPECIFICA PARA UM USUÁRIO NÃO PODER TER DUAS NOTAS COM O MESMO NOME, MAS OUTRO USUÁRIO PODER TER UMA NOTA COM O MESMO NOME
+                Rule::unique('categorias')->where(fn (Builder $query) => $query->where('user_id', auth()->user()->id))
+            ],
+            'cor' => 'required'
         ];
     }
 }

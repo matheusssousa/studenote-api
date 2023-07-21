@@ -13,7 +13,7 @@ class DisciplinaController extends Controller
      */
     public function index()
     {
-        $disciplina = Disciplina::all();
+        $disciplina = Disciplina::where('user_id', auth()->user()->id)->get();
         
         return response()->json($disciplina, 200);
     }
@@ -33,6 +33,7 @@ class DisciplinaController extends Controller
     {
         $disciplina = new Disciplina();
         $disciplina->nome = $request->nome;
+        $disciplina->user_id = auth()->user()->id;
         $disciplina->save();
 
         return response()->json($disciplina, 201);
@@ -45,7 +46,11 @@ class DisciplinaController extends Controller
     {
         $disciplina = Disciplina::find($id);
 
-        return response()->json($disciplina, 200);
+        if ($disciplina->user_id == auth()->user()->id) {
+            return response()->json($disciplina, 200);
+        } else {
+            return response()->json(['erro' => 'Não disponível para você']);
+        }
     }
 
     /**
@@ -63,7 +68,7 @@ class DisciplinaController extends Controller
     {
         $disciplina = Disciplina::find($id);
 
-        if ($disciplina === null) {
+        if ($disciplina === null || $disciplina->user_id != auth()->user()->id) {
             return response()->json(['erro' => 'Não foi possível efetuar a atualização, o registro buscado não existe.']);
         }
 
@@ -80,7 +85,7 @@ class DisciplinaController extends Controller
     {
         $disciplina = Disciplina::find($id);
 
-        if ($disciplina === null) {
+        if ($disciplina === null || $disciplina->user_id != auth()->user()->id) {
             return response()->json(['erro' => 'Não foi possível efetuar a exclusão, o registro buscado não existe.']);
         }
 
