@@ -12,12 +12,12 @@ class Notas extends Model
 
 
     public function usuarios() {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
     public function disciplina() {
-        return $this->hasMany(Disciplina::class);
+        return $this->belongsTo(Disciplina::class);
     }
     public function categorias() {
-        return $this->belongsToMany(Categoria::class, 'categorias_tarefas', 'tarefa_id', 'categoria_id')->withPivot('id');
+        return $this->belongsToMany(Categoria::class, 'categoria_notas', 'nota_id', 'categoria_id')->withPivot('id');
     }
 }

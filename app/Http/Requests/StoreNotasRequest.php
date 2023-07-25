@@ -23,7 +23,7 @@ class StoreNotasRequest extends FormRequest
     {
         return [
             'nome' => 'required|min:3',
-            'descricao' => 'required|max:200',
+            'descricao' => 'required|max:2000',
             'id_categoria' => 'exists:categorias,id',
         ];
     }

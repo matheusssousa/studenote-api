@@ -16,6 +16,6 @@ class Disciplina extends Model
     }
     public function tarefas()
     {
-        return $this->belongsTo(Tarefa::class);
+        return $this->hasMany(Tarefa::class);
     }
 }

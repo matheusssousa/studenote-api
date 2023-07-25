@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nome', 50);
-            $table->string('descricao', 150);
+            $table->string('descricao', 2000);
             $table->date('data_prazo')->nullable();
             $table->unsignedBigInteger('disciplina_id');
             $table->unsignedBigInteger('user_id');  
