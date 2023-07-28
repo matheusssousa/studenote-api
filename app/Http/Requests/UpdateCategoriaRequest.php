@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateCategoriaRequest extends FormRequest
@@ -21,8 +23,9 @@ class UpdateCategoriaRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
+    public function rules(HttpRequest $request): array
     {
+        dd($request->server('REQUEST_METHOD'));
         return [
             'nome' => [
                 'required',
