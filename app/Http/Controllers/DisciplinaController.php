@@ -42,7 +42,7 @@ class DisciplinaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Disciplina $disciplina, $id)
+    public function show($id)
     {
         $disciplina = Disciplina::find($id);
 
@@ -64,7 +64,7 @@ class DisciplinaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDisciplinaRequest $request, Disciplina $disciplina, $id)
+    public function update(UpdateDisciplinaRequest $request, $id)
     {
         $disciplina = Disciplina::find($id);
 
@@ -81,7 +81,7 @@ class DisciplinaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Disciplina $disciplina, $id)
+    public function destroy($id)
     {
         $disciplina = Disciplina::find($id);
 

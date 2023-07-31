@@ -28,7 +28,9 @@ class UpdateDisciplinaRequest extends FormRequest
                 'required',
                 'min:3',
                 // FUNÇÃO ESPECIFICA PARA UM USUÁRIO NÃO PODER TER DUAS DISCIPLINAS COM O MESMO NOME, MAS OUTRO USUÁRIO PODER TER UMA DISCIPLINA COM O MESMO NOME
-                Rule::unique('disciplinas')->where(fn (Builder $query) => $query->where('user_id', auth()->user()->id))
+                Rule::unique('disciplinas')->where(function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                })->ignore($this->route('disciplina'))
                 ]
         ];
     }

@@ -93,6 +93,8 @@ class CategoriaController extends Controller
             return response()->json(['erro' => 'Não foi possível efetuar a exclusão, o registro buscado não existe.']);
         }
 
+        $categoria->notas()->detach();
+
         $categoria->delete();
 
         return response()->json(['message' => 'Exclusão feita com sucesso'], 200);

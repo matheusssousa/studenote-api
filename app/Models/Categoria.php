@@ -14,8 +14,8 @@ class Categoria extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function tarefas()
+    public function notas()
     {
-        return $this->belongsToMany(Tarefa::class, 'categoria_notas', 'categoria_id', 'tarefa_id')->withPivot('id');
+        return $this->belongsToMany(Notas::class, 'categoria_notas', 'categoria_id', 'tarefa_id')->withPivot('id');
     }
 }

@@ -14,8 +14,8 @@ class Disciplina extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function tarefas()
+    public function notas()
     {
-        return $this->hasMany(Tarefa::class);
+        return $this->hasMany(Notas::class);
     }
 }

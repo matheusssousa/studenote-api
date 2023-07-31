@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateCategoriaRequest extends FormRequest
@@ -23,15 +21,17 @@ class UpdateCategoriaRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(HttpRequest $request): array
+    public function rules(): array
     {
-        dd($request->server('REQUEST_METHOD'));
         return [
             'nome' => [
                 'required',
                 'min:3',
                 // FUNÇÃO ESPECIFICA PARA UM USUÁRIO NÃO PODER TER DUAS NOTAS COM O MESMO NOME, MAS OUTRO USUÁRIO PODER TER UMA NOTA COM O MESMO NOME
-                Rule::unique('categorias')->where(fn (Builder $query) => $query->where('user_id', auth()->user()->id))
+                Rule::unique('categorias')->where(function ($query) {
+                    return $query->where('user_id', auth()->user()->id);
+                })->ignore($this->route('categorium'))
+                //O IGNORE VAI IGNORAR O REGISTRO DA CATEGORIA ATUAL AO VERIFICAR A TABELA DE NOMES, ALEM DISSO, $this->route('categorium'), VAI PEGAR O ID LÁ DO LINK DA ROTA
             ],
             'cor' => 'required'
         ];
