@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('cor', 7);
             $table->unsignedBigInteger('user_id');  
 
-            // //CHAVE ESTRANGEIRA DE USUÁRIO
+            // CHAVE ESTRANGEIRA DE USUÁRIO
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

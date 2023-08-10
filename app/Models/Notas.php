@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Notas extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome','descricao','data_prazo', 'disciplina_id', 'user_id'];
+    protected $fillable = ['nome','descricao','data_prazo', 'disciplina_id', 'user_id', 'annotation_community'];
 
-
-    public function usuarios() {
-        return $this->belongsTo(User::class);
+    public function usuario() {
+        return $this->belongsTo(User::class, 'id');
     }
     public function disciplina() {
         return $this->belongsTo(Disciplina::class);

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\NotasController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('jwt-auth')->group(function(){
+    Route::apiResource('community', CommunityController::class);
     Route::apiResource('categoria', CategoriaController::class);
     Route::apiResource('disciplina', DisciplinaController::class);
     Route::apiResource('notas', NotasController::class);

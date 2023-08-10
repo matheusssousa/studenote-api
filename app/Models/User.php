@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Http\Controllers\NotasController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -71,5 +73,8 @@ class User extends Authenticatable implements JWTSubject
     }
     public function disciplinas(){
         return $this->hasMany(Disciplina::class);
+    }
+    public function notas(){
+        return $this->hasMany(NotasController::class);
     }
 }
