@@ -29,22 +29,39 @@ class UserController extends Controller
     }
 
     public function update(UpdateUserRequest $request, $id)
-{
-    $user = User::find($id);
+    {
+        $user = User::find($id);
 
-    if ($user === null) {
-        return response()->json(['message' => 'Não foi possível fazer a atualização, usuário não encontrado.'], 404);
+        if ($user === null || auth()->user()->id != $id) {
+            return response()->json(['message' => 'Acesso não autorizado'], 404);
+        }
+
+        $user->fill($request->only(['name', 'email']));
+
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json(['message' => 'Usuário atualizado com sucesso', 'user' => $user], 200);
     }
 
-    $user->fill($request->only(['name', 'email']));
+    public function show($id)
+    {
+        $user = User::find($id);
 
-    if ($request->has('password')) {
-        $user->password = Hash::make($request->password);
+        if ($user === null) {
+            return response()->json(['message' => 'Usuário não encontrado.'], 404);
+        }
+
+        return response()->json(['user' => $user]);
     }
 
-    $user->save();
+    public function showAll()
+    {
+        $user = User::all();
 
-    return response()->json(['message' => 'Usuário atualizado com sucesso', 'user' => $user], 200);
-}
-
+        return response()->json($user);
+    }
 }

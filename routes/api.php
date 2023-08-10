@@ -24,15 +24,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [UserController::class, 'register']);
+
 Route::middleware('jwt-auth')->group(function(){
     Route::apiResource('community', CommunityController::class);
     Route::apiResource('categoria', CategoriaController::class);
     Route::apiResource('disciplina', DisciplinaController::class);
     Route::apiResource('notas', NotasController::class);
+
+    Route::get('user', [UserController::class, 'showAll']);
+    Route::get('user/{id}', [UserController::class, 'show']);
+
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('me', [AuthController::class, 'me']);
     // Route::post('refresh', [AuthController::class, 'refresh']);
 });
-
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [UserController::class, 'register']);
