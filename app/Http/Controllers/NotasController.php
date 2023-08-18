@@ -61,7 +61,7 @@ class NotasController extends Controller
      */
     public function show(Notas $notas, $id)
     {
-        $nota = Notas::with('categorias')->find($id);
+        $nota = Notas::with('categorias','disciplina')->find($id);
 
         if ($nota->user_id != auth()->user()->id) {
             return response()->json(['message' => 'Esse registro não existe.']);

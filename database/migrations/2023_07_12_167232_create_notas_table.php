@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nome', 50);
-            $table->string('descricao', 2000);
+            $table->string('descricao', 10000);
             $table->date('data_prazo')->nullable();
             $table->unsignedBigInteger('disciplina_id');
             $table->unsignedBigInteger('user_id');  
             $table->boolean('annotation_community');
+            // $table->integer('likes')->nullable();
 
-            // CHAVE ESTRANGEIRA DE USUÁRIO
+            //CHAVE ESTRANGEIRA DE USUÁRIO
             $table->foreign('user_id')->references('id')->on('users');
             //CHAVE ESTRANGEIRA DE DISCIPLINA
             $table->foreign('disciplina_id')->references('id')->on('disciplinas');
