@@ -20,6 +20,7 @@ class UserController extends Controller
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
+            'avatar' => 1,
             'password' => Hash::make($request->password),
         ]);
 
@@ -36,7 +37,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Acesso não autorizado'], 404);
         }
 
-        $user->fill($request->only(['name', 'email']));
+        $user->fill($request->only(['name', 'email', 'avatar']));
 
         if ($request->has('password')) {
             $user->password = Hash::make($request->password);
