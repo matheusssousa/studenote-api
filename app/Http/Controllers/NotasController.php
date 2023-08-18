@@ -121,7 +121,8 @@ class NotasController extends Controller
         // DELETA NA TABELA CATEGORIANOTA PRIMEIRO PARA NÃO CAUSAR ERRO DE CHAVE ESTRANGEIRA
         $nota->categorias()->detach();
 
-        $nota->delete();
+        $nota->softDeletes();
+        // $nota->delete();
 
         return response()->json(['message' => 'Exclusão feita com sucesso'], 200);
     }

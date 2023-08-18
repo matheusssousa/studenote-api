@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categoria_notas', function (Blueprint $table) {
-            $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('categoria_id');
             $table->unsignedBigInteger('nota_id');
