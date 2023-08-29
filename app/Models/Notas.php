@@ -19,4 +19,7 @@ class Notas extends Model
     public function categorias() {
         return $this->belongsToMany(Categoria::class, 'categoria_notas', 'nota_id', 'categoria_id')->withPivot('id');
     }
+    public function files() {
+        return $this->hasMany(FilesNotas::class, 'nota_id');
+    }
 }

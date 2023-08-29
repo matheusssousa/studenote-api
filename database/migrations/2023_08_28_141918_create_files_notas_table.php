@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categoria_notas', function (Blueprint $table) {
+        Schema::create('files_notas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('categoria_id');
+            $table->string('arquivo');
+            $table->string('nome_arquivo');
             $table->unsignedBigInteger('nota_id');
 
-            //CHAVES ESTRANGEIRAS
-            $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->foreign('nota_id')->references('id')->on('notas');
         });
     }
@@ -29,7 +28,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('categorias_tarefas');
+        Schema::dropIfExists('files_notas');
         Schema::enableForeignKeyConstraints();
     }
 };

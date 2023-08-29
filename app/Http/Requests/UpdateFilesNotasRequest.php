@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateNotasRequest extends FormRequest
+class UpdateFilesNotasRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +22,7 @@ class UpdateNotasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'min:3',
-            'descricao' => 'max:10000',
-            'id_categoria' => 'exists:categorias,id',
-            'disciplina_id' => 'exists:disciplinas,id'
+            //
         ];
     }
 }

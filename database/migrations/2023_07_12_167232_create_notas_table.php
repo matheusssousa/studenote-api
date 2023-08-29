@@ -20,7 +20,6 @@ return new class extends Migration
             $table->unsignedBigInteger('disciplina_id');
             $table->unsignedBigInteger('user_id');  
             $table->boolean('annotation_community');
-            // $table->integer('likes')->nullable();
 
             //CHAVE ESTRANGEIRA DE USUÁRIO
             $table->foreign('user_id')->references('id')->on('users');
