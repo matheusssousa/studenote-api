@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('arquivo');
             $table->string('nome_arquivo');
+            $table->string('arquivo_type');
             $table->unsignedBigInteger('nota_id');
 
             $table->foreign('nota_id')->references('id')->on('notas');

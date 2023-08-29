@@ -55,7 +55,8 @@ class NotasController extends Controller
             foreach ($arquivos as $key => $arquivo) {
                 $arquivo_urn = $arquivo->store('arquivos', 'public');
                 $arquivo_nome = $arquivo->getClientOriginalName();
-                FilesNotas::create(['arquivo' => $arquivo_urn, 'nome_arquivo' => $arquivo_nome, 'nota_id' => $nota->id]);
+                $arquivo_type = $arquivo->getClientOriginalExtension();
+                FilesNotas::create(['arquivo' => $arquivo_urn, 'nome_arquivo' => $arquivo_nome, 'arquivo_type' => $arquivo_type, 'nota_id' => $nota->id]);
             }
         }
 
@@ -162,10 +163,11 @@ class NotasController extends Controller
             $arquivos = $request->file('arquivo');
             foreach ($arquivos as $key => $arquivo) {
                 $arquivo_nome = $arquivo->getClientOriginalName();
+                $arquivo_type = $arquivo->getClientOriginalExtension();
                 // Verificar se o arquivo já existe antes de adicioná-lo novamente
                 if (!in_array($arquivo_nome, $arquivos_exists)) {
                     $arquivo_urn = $arquivo->store('arquivos', 'public');
-                    FilesNotas::create(['arquivo' => $arquivo_urn, 'nome_arquivo' => $arquivo_nome, 'nota_id' => $nota->id]);
+                    FilesNotas::create(['arquivo' => $arquivo_urn, 'nome_arquivo' => $arquivo_nome, 'arquivo_type' => $arquivo_type, 'nota_id' => $nota->id]);
                 }
             }
         }

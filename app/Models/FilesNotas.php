@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class FilesNotas extends Model
 {
     use HasFactory;
-    protected $fillable = ['arquivo', 'nome_arquivo', 'nota_id'];
+    protected $fillable = ['arquivo', 'nome_arquivo', 'arquivo_type', 'nota_id'];
 
     public function nota()
     {
