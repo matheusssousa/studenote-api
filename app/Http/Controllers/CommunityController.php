@@ -12,7 +12,7 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        $anotacao = Notas::where('annotation_community', 1)->with('disciplina', 'categorias', 'usuario')->get();
+        $anotacao = Notas::where('annotation_community', 1)->with('disciplina', 'categorias', 'usuario', 'files')->get();
 
         return response()->json($anotacao, 200);
     }
