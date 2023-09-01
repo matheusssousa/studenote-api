@@ -12,7 +12,7 @@ class Comentario extends Model
 
     public function nota()
     {
-        return $this->hasMany(Notas::class);
+        return $this->belongsTo(Notas::class);
     }
     public function user()
     {
