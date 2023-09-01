@@ -16,7 +16,7 @@ class NotasController extends Controller
      */
     public function index()
     {
-        $nota = Notas::where('user_id', auth()->user()->id)->with('categorias', 'disciplina', 'files')->get();
+        $nota = Notas::where('user_id', auth()->user()->id)->with('categorias', 'disciplina', 'files', 'comentarios')->get();
 
         return response()->json($nota, 200);
     }

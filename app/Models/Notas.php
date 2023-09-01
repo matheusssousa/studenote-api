@@ -22,4 +22,7 @@ class Notas extends Model
     public function files() {
         return $this->hasMany(FilesNotas::class, 'nota_id');
     }
+    public function comentarios(){
+        return $this->belongsTo(Comentario::class);
+    }
 }
