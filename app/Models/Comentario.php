@@ -16,10 +16,11 @@ class Comentario extends Model
     }
     public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
+    // POSSIVEL CONFLITO
     public function comentario()
     {
-        return $this->hasMany(Comentario::class);   
+        return $this->hasMany(Comentario::class);
     }
 }

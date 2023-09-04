@@ -83,6 +83,6 @@ class User extends Authenticatable implements JWTSubject
     }
     public function comentarios()
     {
-        return $this->belongsTo(Comentario::class);
+        return $this->hasMany(Comentario::class);
     }
 }
