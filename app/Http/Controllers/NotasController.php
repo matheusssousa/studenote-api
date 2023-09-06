@@ -7,6 +7,7 @@ use App\Http\Requests\StoreNotasRequest;
 use App\Http\Requests\UpdateNotasRequest;
 use App\Models\CategoriaNota;
 use App\Models\FilesNotas;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class NotasController extends Controller
@@ -16,7 +17,7 @@ class NotasController extends Controller
      */
     public function index()
     {
-        $nota = Notas::where('user_id', auth()->user()->id)->with('categorias', 'disciplina', 'files')->get();
+        $nota = Notas::where('user_id', auth()->user()->id)->with('categorias', 'disciplina', 'files', 'comentarios')->get();
 
         return response()->json($nota, 200);
     }
@@ -173,6 +174,17 @@ class NotasController extends Controller
         }
     }
 
+    /**
+     * Colocar nota na comunidade.
+     */
+    public function addComunidade(Request $request, $nota) {
+        $nota = Notas::findOrFail($nota);
+
+        $nota->annotation_community = $request->annotation_community;
+        $nota->save();
+
+        return response()->json(['message' => 'Anotação adicionada na comunidade.', 'nota' => $nota]);
+    }
     /**
      * Remove the specified resource from storage.
      */

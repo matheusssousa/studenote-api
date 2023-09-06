@@ -69,13 +69,20 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
-    public function categorias(){
+    public function categorias()
+    {
         return $this->hasMany(Categoria::class);
     }
-    public function disciplinas(){
+    public function disciplinas()
+    {
         return $this->hasMany(Disciplina::class);
     }
-    public function notas(){
+    public function notas()
+    {
         return $this->hasMany(NotasController::class);
+    }
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class);
     }
 }
