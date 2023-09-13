@@ -27,11 +27,11 @@ class UpdateCategoriaRequest extends FormRequest
             'nome' => [
                 'required',
                 'min:3',
-                // FUNÇÃO ESPECIFICA PARA UM USUÁRIO NÃO PODER TER DUAS NOTAS COM O MESMO NOME, MAS OUTRO USUÁRIO PODER TER UMA NOTA COM O MESMO NOME
+                // Função especifica para um usuário não ter duas notas com o mesmo nome, mas outro usuário poder ter uma nota com o mesmo nome
                 Rule::unique('categorias')->where(function ($query) {
                     return $query->where('user_id', auth()->user()->id);
+                    // O ignone vai ignorar o registro da categoria atual ao verificar a tabela de nomes, além disso, $this->route('categorum') vai peggar o ID lá do link da rota
                 })->ignore($this->route('categorium'))
-                //O IGNORE VAI IGNORAR O REGISTRO DA CATEGORIA ATUAL AO VERIFICAR A TABELA DE NOMES, ALEM DISSO, $this->route('categorium'), VAI PEGAR O ID LÁ DO LINK DA ROTA
             ],
             'cor' => 'required'
         ];

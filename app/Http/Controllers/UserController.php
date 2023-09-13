@@ -31,9 +31,9 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, $id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
-        if ($user === null || auth()->user()->id != $id) {
+        if (auth()->user()->id != $id) {
             return response()->json(['message' => 'Acesso não autorizado'], 404);
         }
 
@@ -50,11 +50,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::find($id);
-
-        if ($user === null) {
-            return response()->json(['message' => 'Usuário não encontrado.'], 404);
-        }
+        $user = User::findOrFail($id);
 
         return response()->json(['user' => $user]);
     }

@@ -177,14 +177,19 @@ class NotasController extends Controller
     /**
      * Colocar nota na comunidade.
      */
-    public function addComunidade(Request $request, $nota) {
+    public function addComunidade(Request $request, $nota) { 
         $nota = Notas::findOrFail($nota);
 
         $nota->annotation_community = $request->annotation_community;
         $nota->save();
 
-        return response()->json(['message' => 'Anotação adicionada na comunidade.', 'nota' => $nota]);
+        if ($nota->annotation_community === '1') {
+            return response()->json(['message' => 'Anotação adicionada na comunidade.']);
+        } else {
+            return response()->json(['message' => 'Anotação removida da comunidade.']);
+        }
     }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -206,6 +211,7 @@ class NotasController extends Controller
         // Primeiramente é deletado na tabela CategoriaNota para não causar erro de chave entrangeira
         $nota->categorias()->detach();
         $nota->files()->delete();
+        $nota->comentarios()->delete();
         $nota->delete();
 
         return response()->json(['message' => 'Exclusão feita com sucesso'], 200);

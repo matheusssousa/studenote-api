@@ -24,8 +24,11 @@ class StoreNotasRequest extends FormRequest
         return [
             'nome' => 'required|min:3',
             'descricao' => 'required|max:10000',
-            'id_categoria' => 'exists:categorias,id',
-            'disciplina_id' => 'exists:disciplinas,id'
+            'disciplina_id' => 'exists:disciplinas,id',
+            'annotation_community' => 'boolean',
+            'categorias' => 'exists:categorias,id',
+            // Validar o arquivo dentro do array arquivo
+            'arquivo.*' => 'file|mimes:png,docx,pdf,jpeg,jpg|max:3144'
         ];
     }
 }

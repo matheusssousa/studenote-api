@@ -38,10 +38,10 @@ class CommunityController extends Controller
      */
     public function show($id)
     {
-        $anotacao = Notas::find($id);
+        $anotacao = Notas::findOrFail($id);
 
         if ($anotacao->community_annotation != 1) {
-            return response()->json(['Erro' => 'A anotação não está disponível']);
+            return response()->json(['Erro' => 'A anotação não está disponível.']);
         }
     }
 

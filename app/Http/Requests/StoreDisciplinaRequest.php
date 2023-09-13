@@ -27,7 +27,6 @@ class StoreDisciplinaRequest extends FormRequest
             'nome' => [
                 'required',
                 'min:3',
-                // FUNÇÃO ESPECIFICA PARA UM USUÁRIO NÃO PODER TER DUAS DISCIPLINAS COM O MESMO NOME, MAS OUTRO USUÁRIO PODER TER UMA DISCIPLINA COM O MESMO NOME
                 Rule::unique('disciplinas')->where(fn (Builder $query) => $query->where('user_id', auth()->user()->id))
                 ]
         ];
