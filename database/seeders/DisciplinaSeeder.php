@@ -73,14 +73,10 @@ class DisciplinaSeeder extends Seeder
             'Filosofia e Ética',            
         ];
 
-        Disciplina::create([
-            'nome' => 'AEDS I'
-        ]);
-        Disciplina::create([
-            'nome' => 'Administração'
-        ]);
-        Disciplina::create([
-            'nome' => 'Inglês I'
-        ]);
+        foreach ($disciplinas as $key => $disciplina) {
+            Disciplina::create([
+                'nome' => $disciplina
+            ]);
+        }
     }
 }
