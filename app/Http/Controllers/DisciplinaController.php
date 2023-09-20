@@ -13,7 +13,7 @@ class DisciplinaController extends Controller
      */
     public function index()
     {
-        $disciplina = Disciplina::where('user_id', auth()->user()->id)->get();
+        $disciplina = Disciplina::all();
         
         return response()->json($disciplina, 200);
     }
