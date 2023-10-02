@@ -39,6 +39,7 @@ Route::middleware('jwt-auth')->group(function(){
 
     Route::get('users', [UserController::class, 'showAll']);
     Route::get('user/{id}', [UserController::class, 'show']);
+    Route::post('user/{id}', [UserController::class, 'updatePassword']);
     Route::apiResource('user', UserController::class);
 
     Route::post('logout', [AuthController::class, 'logout']);

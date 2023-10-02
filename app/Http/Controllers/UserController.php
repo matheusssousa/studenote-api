@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -38,14 +39,22 @@ class UserController extends Controller
         }
 
         $user->fill($request->only(['name', 'email', 'avatar']));
-
-        if ($request->has('password')) {
-            $user->password = Hash::make($request->password);
-        }
-
         $user->save();
 
         return response()->json(['message' => 'Usuário atualizado com sucesso', 'user' => $user], 200);
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request, $id){
+        $user = User::findOrFail($id);
+
+        if (auth()->user()->id != $id) {
+            return response()->json(['message' => 'Acesso não autorizado'], 404);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json(['message' => 'Senha alterada com sucesso.', 'user' => $user], 200);
     }
 
     public function show($id)
