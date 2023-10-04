@@ -36,6 +36,7 @@ Route::middleware('jwt-auth')->group(function(){
 
     Route::apiResource('notas', NotasController::class);
     Route::patch('notas/{nota}/community', [NotasController::class, 'addComunidade']);
+    Route::patch('notas/{nota}/like', [NotasController::class, 'likeNote']);
 
     Route::get('users', [UserController::class, 'showAll']);
     Route::get('user/{id}', [UserController::class, 'show']);

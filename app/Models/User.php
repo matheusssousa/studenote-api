@@ -85,4 +85,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Comentario::class);
     }
+    public function likes()
+    {
+        return $this->belongsToMany(Notas::class, 'likes_notas', 'user_id', 'nota_id')->withPivot('id');
+    }
 }
