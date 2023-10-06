@@ -18,7 +18,7 @@ class NotasController extends Controller
      */
     public function index()
     {
-        $nota = Notas::where('user_id', auth()->user()->id)->with('categorias', 'disciplina', 'files', 'comentarios')->get();
+        $nota = Notas::where('user_id', auth()->user()->id)->with('categorias', 'disciplina', 'files', 'comentarios', 'likes')->get();
 
         return response()->json($nota, 200);
     }
@@ -70,7 +70,7 @@ class NotasController extends Controller
      */
     public function show(Notas $notas, $id)
     {
-        $nota = Notas::with('categorias', 'disciplina', 'files')->find($id);
+        $nota = Notas::with('categorias', 'disciplina', 'files', 'likes')->find($id);
 
         if ($nota->user_id != auth()->user()->id) {
             return response()->json(['message' => 'Esse registro não existe.']);
@@ -244,6 +244,7 @@ class NotasController extends Controller
         $nota->categorias()->detach();
         $nota->files()->delete();
         $nota->comentarios()->delete();
+        $nota->likes()->delete();
         $nota->delete();
 
         return response()->json(['message' => 'Exclusão feita com sucesso'], 200);

@@ -12,7 +12,7 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        $anotacao = Notas::where('annotation_community', 1)->with('disciplina', 'usuario', 'files', 'comentarios')->get();
+        $anotacao = Notas::where('annotation_community', 1)->with('disciplina', 'usuario', 'files', 'comentarios', 'likes')->get();
 
         return response()->json($anotacao, 200);
     }
@@ -38,7 +38,7 @@ class CommunityController extends Controller
      */
     public function show($id)
     {
-        $anotacao = Notas::with('disciplina', 'usuario', 'files', 'comentarios')->findOrFail($id);
+        $anotacao = Notas::with('disciplina', 'usuario', 'files', 'comentarios', 'likes')->findOrFail($id);
 
         if ($anotacao->annotation_community != 1) {
             return response()->json(['Erro' => 'A anotação não está disponível.']);
