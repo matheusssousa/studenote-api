@@ -27,7 +27,7 @@ class StoreCategoriaRequest extends FormRequest
             'nome' => [
                 'required',
                 'min:3',
-                // FUNÇÃO ESPECIFICA PARA UM USUÁRIO NÃO PODER TER DUAS NOTAS COM O MESMO NOME, MAS OUTRO USUÁRIO PODER TER UMA NOTA COM O MESMO NOME
+                // Função para um usuário não ter duas categorias com o mesmo nome, mas outro usuário poder ter uma categoria com o mesmo nome.
                 Rule::unique('categorias')->where(fn (Builder $query) => $query->where('user_id', auth()->user()->id))
             ],
             'cor' => 'required'

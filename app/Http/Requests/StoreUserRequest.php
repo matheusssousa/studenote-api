@@ -25,6 +25,7 @@ class StoreUserRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:8',
+            // Não colocou o avatar aqui pois esse registro é feito dentro do controller
         ];
     }
 }

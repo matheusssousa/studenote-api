@@ -45,16 +45,13 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        $categoria = Categoria::find($id);
+        $categoria = Categoria::findOrFail($id);
 
         if ($categoria->user_id == auth()->user()->id) {
             return response()->json($categoria, 200);
         } else {
-            return response()->json(['erro' => 'Não disponível para você']);
+            return response()->json(['erro' => 'O registro buscado não existe ou não está disponível.']);
         }
-
-        //PARA CONSEGUIR AS INFORMAÇÕES DAS TAREFAS QUE CONTEM A CATEGORIA
-        //$categoria = Categoria::with('tarefa')->find($id);
     }
 
     /**
@@ -70,9 +67,9 @@ class CategoriaController extends Controller
      */
     public function update(UpdateCategoriaRequest $request, Categoria $categoria, $id)
     {
-        $categoria = Categoria::find($id);
+        $categoria = Categoria::findOrFail($id);
 
-        if ($categoria === null || $categoria->user_id != auth()->user()->id) {
+        if ($categoria->user_id != auth()->user()->id) {
             return response()->json(['erro' => 'Não foi possível efetuar a atualização, o registro buscado não existe.']);
         }
 
@@ -87,14 +84,13 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria, $id)
     {
-        $categoria = Categoria::find($id);
+        $categoria = Categoria::findOrFail($id);
 
-        if ($categoria === null || $categoria->user_id != auth()->user()->id) {
+        if ($categoria->user_id != auth()->user()->id) {
             return response()->json(['erro' => 'Não foi possível efetuar a exclusão, o registro buscado não existe.']);
         }
 
         $categoria->notas()->detach();
-
         $categoria->delete();
 
         return response()->json(['message' => 'Exclusão feita com sucesso'], 200);

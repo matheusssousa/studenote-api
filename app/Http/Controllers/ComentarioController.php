@@ -31,18 +31,16 @@ class ComentarioController extends Controller
     public function store(StoreComentarioRequest $request)
     {
         // Fazer somente se a anotação estiver habilitada para a comunidade.
-        $nota = Notas::find($request->nota_id);
+        $nota = Notas::findOrFail($request->nota_id);
 
         if ($nota->annotation_community == 1) {
             $comentario = new Comentario;
             $comentario->comentario = $request->comentario;
             $comentario->nota_id = $request->nota_id;
             $comentario->user_id = auth()->user()->id;
-    
             if ($request->comentario_pai) {
                 $comentario->comentario_pai = $request->comentario_pai;
             }
-    
             $comentario->save();
 
             return response()->json($comentario, 201);
@@ -56,7 +54,7 @@ class ComentarioController extends Controller
      */
     public function show(Comentario $comentario, $id)
     {
-        $comentario = Comentario::find($id);
+        $comentario = Comentario::findOrFail($id);
 
         return response()->json($comentario, 201);
     }
@@ -74,9 +72,9 @@ class ComentarioController extends Controller
      */
     public function update(UpdateComentarioRequest $request, Comentario $comentario, $id)
     {
-        $comentario = Comentario::find($id);
+        $comentario = Comentario::findOrFail($id);
 
-        if ($comentario === null || $comentario->user_id != auth()->user()->id) {
+        if ($comentario->user_id != auth()->user()->id) {
             return response()->json(['Erro' => 'O registro buscado não existe.']);
         }
 
@@ -91,9 +89,9 @@ class ComentarioController extends Controller
      */
     public function destroy(Comentario $comentario, $id)
     {
-        $comentario = Comentario::find($id);
+        $comentario = Comentario::findOrFail($id);
 
-        if (!$comentario || $comentario->user_id != auth()->user()->id) {
+        if ($comentario->user_id != auth()->user()->id) {
             return response()->json(['Erro' => 'O registro buscado não existe.']);
         }
 

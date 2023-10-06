@@ -13,7 +13,7 @@ class DisciplinaController extends Controller
      */
     public function index()
     {
-        $disciplina = Disciplina::where('user_id', auth()->user()->id)->get();
+        $disciplina = Disciplina::all();
         
         return response()->json($disciplina, 200);
     }
@@ -31,12 +31,12 @@ class DisciplinaController extends Controller
      */
     public function store(StoreDisciplinaRequest $request)
     {
-        $disciplina = new Disciplina();
-        $disciplina->nome = $request->nome;
-        $disciplina->user_id = auth()->user()->id;
-        $disciplina->save();
+        // $disciplina = new Disciplina();
+        // $disciplina->nome = $request->nome;
+        // $disciplina->user_id = auth()->user()->id;
+        // $disciplina->save();
 
-        return response()->json($disciplina, 201);
+        // return response()->json($disciplina, 201);
     }
 
     /**
@@ -46,11 +46,12 @@ class DisciplinaController extends Controller
     {
         $disciplina = Disciplina::find($id);
 
-        if ($disciplina->user_id == auth()->user()->id) {
-            return response()->json($disciplina, 200);
-        } else {
-            return response()->json(['erro' => 'Não disponível para você']);
-        }
+        // if ($disciplina->user_id == auth()->user()->id) {
+        //     return response()->json($disciplina, 200);
+        // } else {
+        //     return response()->json(['erro' => 'Não disponível para você']);
+        // }
+        return response()->json($disciplina, 200);
     }
 
     /**
@@ -66,16 +67,16 @@ class DisciplinaController extends Controller
      */
     public function update(UpdateDisciplinaRequest $request, $id)
     {
-        $disciplina = Disciplina::find($id);
+        // $disciplina = Disciplina::find($id);
 
-        if ($disciplina === null || $disciplina->user_id != auth()->user()->id) {
-            return response()->json(['erro' => 'Não foi possível efetuar a atualização, o registro buscado não existe.']);
-        }
+        // if ($disciplina === null || $disciplina->user_id != auth()->user()->id) {
+        //     return response()->json(['erro' => 'Não foi possível efetuar a atualização, o registro buscado não existe.']);
+        // }
 
-        $disciplina->fill($request->all());
-        $disciplina->save();
+        // $disciplina->fill($request->all());
+        // $disciplina->save();
         
-        return response()->json($disciplina, 200);
+        // return response()->json($disciplina, 200);
     }
 
     /**
@@ -83,14 +84,14 @@ class DisciplinaController extends Controller
      */
     public function destroy($id)
     {
-        $disciplina = Disciplina::find($id);
+        // $disciplina = Disciplina::find($id);
 
-        if ($disciplina === null || $disciplina->user_id != auth()->user()->id) {
-            return response()->json(['erro' => 'Não foi possível efetuar a exclusão, o registro buscado não existe.']);
-        }
+        // if ($disciplina === null || $disciplina->user_id != auth()->user()->id) {
+        //     return response()->json(['erro' => 'Não foi possível efetuar a exclusão, o registro buscado não existe.']);
+        // }
 
-        $disciplina->delete();
+        // $disciplina->delete();
 
-        return response()->json(['message' => 'Exclusão feita com sucesso'], 200);
+        // return response()->json(['message' => 'Exclusão feita com sucesso'], 200);
     }
 }

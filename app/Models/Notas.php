@@ -30,4 +30,8 @@ class Notas extends Model
     {
         return $this->hasMany(Comentario::class, 'nota_id')->with('user');
     }
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'like_notas', 'nota_id', 'user_id')->withPivot('id');
+    }
 }

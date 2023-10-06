@@ -7,6 +7,7 @@ use App\Http\Requests\StoreNotasRequest;
 use App\Http\Requests\UpdateNotasRequest;
 use App\Models\CategoriaNota;
 use App\Models\FilesNotas;
+use App\Models\LikeNota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +18,7 @@ class NotasController extends Controller
      */
     public function index()
     {
-        $nota = Notas::where('user_id', auth()->user()->id)->with('categorias', 'disciplina', 'files', 'comentarios')->get();
+        $nota = Notas::where('user_id', auth()->user()->id)->with('categorias', 'disciplina', 'files', 'comentarios', 'likes')->get();
 
         return response()->json($nota, 200);
     }
@@ -69,7 +70,7 @@ class NotasController extends Controller
      */
     public function show(Notas $notas, $id)
     {
-        $nota = Notas::with('categorias', 'disciplina', 'files')->find($id);
+        $nota = Notas::with('categorias', 'disciplina', 'files', 'likes')->find($id);
 
         if ($nota->user_id != auth()->user()->id) {
             return response()->json(['message' => 'Esse registro não existe.']);
@@ -177,14 +178,50 @@ class NotasController extends Controller
     /**
      * Colocar nota na comunidade.
      */
-    public function addComunidade(Request $request, $nota) {
+    public function addComunidade(Request $request, $nota)
+    {
         $nota = Notas::findOrFail($nota);
 
         $nota->annotation_community = $request->annotation_community;
         $nota->save();
 
-        return response()->json(['message' => 'Anotação adicionada na comunidade.', 'nota' => $nota]);
+        if ($nota->annotation_community === '1') {
+            return response()->json(['message' => 'Anotação adicionada na comunidade.']);
+        } else {
+            return response()->json(['message' => 'Anotação removida da comunidade.']);
+        }
     }
+
+    /**
+     * Like em nota.
+     */
+    public function likeNote(Request $request, $nota)
+    {
+        $nota = Notas::findOrFail($nota);
+
+        if ($nota->likes()->where('nota_id', $nota->id)->where('user_id', auth()->user()->id)->exists()) {
+            return response()->json(['message' => 'Já tem like nesta nota.']);
+        }
+
+        if ($nota->user_id === auth()->user()->id) {
+            return response()->json(['message' => 'Por que você está querendo dar um like na sua nota?']);
+        }
+
+        switch ($request->remove) {
+            case 'false':
+                LikeNota::create(['nota_id' => $nota->id, 'user_id' => auth()->user()->id]);
+                return response()->json(['nota' => $nota, 'message' => 'Obrigado pelo seu like.']);
+                break;
+            case 'true':
+                $nota->likes()->delete();
+                return response()->json(['nota' => $nota, 'message' => 'Você excluiu seu like']);
+                break;
+            default:
+                return response()->json(['message' => 'Parece que deu um erro no seu like']);
+                break;
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -206,6 +243,8 @@ class NotasController extends Controller
         // Primeiramente é deletado na tabela CategoriaNota para não causar erro de chave entrangeira
         $nota->categorias()->detach();
         $nota->files()->delete();
+        $nota->comentarios()->delete();
+        $nota->likes()->delete();
         $nota->delete();
 
         return response()->json(['message' => 'Exclusão feita com sucesso'], 200);
