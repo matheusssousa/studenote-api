@@ -18,6 +18,17 @@ class CommunityController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function popular()
+    {
+        $anotacao = Notas::with('disciplina', 'usuario', 'files', 'comentarios', 'likes')->where('annotation_community', 1)->withCount('likes')->orderByDesc('likes_count')->take(3)->get();
+
+        return response()->json($anotacao, 200);
+    }
+
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()

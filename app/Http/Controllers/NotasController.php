@@ -24,6 +24,16 @@ class NotasController extends Controller
     }
 
     /**
+     * Buscar as notas mais recentes.
+     */
+    public function recentes()
+    {
+        $nota = Notas::where('user_id', auth()->user()->id)->with('categorias', 'disciplina', 'files', 'comentarios', 'likes')->orderByDesc('updated_at', 'created_at')->take(3)->get();
+
+        return response()->json($nota, 200);
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -182,6 +192,10 @@ class NotasController extends Controller
     {
         $nota = Notas::findOrFail($nota);
 
+        if ($nota->user_id !== auth()->user()->id) {
+            return response()->json(['message' => 'Não pode não.'], 201);
+        }
+
         $nota->annotation_community = $request->annotation_community;
         $nota->save();
 
@@ -199,26 +213,14 @@ class NotasController extends Controller
     {
         $nota = Notas::findOrFail($nota);
 
-        if ($nota->likes()->where('nota_id', $nota->id)->where('user_id', auth()->user()->id)->exists()) {
-            return response()->json(['message' => 'Já tem like nesta nota.']);
+        if ($request->like === 0) {
+            return response()->json(["Isso aqui" => $request->like]);
+        } else {
+            return response()->json(["Não aqui" => $request->like]);
         }
-
+        
         if ($nota->user_id === auth()->user()->id) {
             return response()->json(['message' => 'Por que você está querendo dar um like na sua nota?']);
-        }
-
-        switch ($request->remove) {
-            case 'false':
-                LikeNota::create(['nota_id' => $nota->id, 'user_id' => auth()->user()->id]);
-                return response()->json(['nota' => $nota, 'message' => 'Obrigado pelo seu like.']);
-                break;
-            case 'true':
-                $nota->likes()->delete();
-                return response()->json(['nota' => $nota, 'message' => 'Você excluiu seu like']);
-                break;
-            default:
-                return response()->json(['message' => 'Parece que deu um erro no seu like']);
-                break;
         }
     }
 
