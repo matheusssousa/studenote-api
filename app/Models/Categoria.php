@@ -16,6 +16,6 @@ class Categoria extends Model
     }
     public function notas()
     {
-        return $this->belongsToMany(Notas::class, 'categoria_notas', 'categoria_id', 'tarefa_id')->withPivot('id');
+        return $this->belongsToMany(Notas::class, 'categoria_notas', 'categoria_id', 'nota_id')->withPivot('id');
     }
 }
