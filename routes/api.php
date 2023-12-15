@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController as AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DisciplinaController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotasController;
 use App\Http\Controllers\UserController;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +31,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+Route::post('/reset-password/{token}', [ResetPasswordController::class, 'reset']);
 
 Route::middleware('jwt-auth')->group(function(){
     Route::apiResource('dashboard', DashboardController::class);
@@ -43,10 +48,10 @@ Route::middleware('jwt-auth')->group(function(){
 
     Route::get('community/popular/tree', [CommunityController::class, 'popular']);
 
+    Route::apiResource('user', UserController::class);
     Route::get('users', [UserController::class, 'showAll']);
     Route::get('user/{id}', [UserController::class, 'show']);
     Route::post('user/password/{id}', [UserController::class, 'updatePassword']);
-    Route::apiResource('user', UserController::class);
 
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('me', [AuthController::class, 'me']);
