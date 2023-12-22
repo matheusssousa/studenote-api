@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
@@ -27,7 +26,7 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth('api')->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -75,13 +74,11 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        $user = auth()->user();
-
         return response()->json([
-            // 'user' => $user,
+            'user' => auth()->user(),
             'access_token' => $token,
             'token_type' => 'bearer',
-            // 'expires_in' => auth('api')->factory()->getTTL() * 60
+            // 'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }

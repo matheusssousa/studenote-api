@@ -12,8 +12,9 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use App\Notifications\ResetPasswordNotification;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable implements JWTSubject, CanResetPassword
+class User extends Authenticatable implements JWTSubject, CanResetPassword, MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 

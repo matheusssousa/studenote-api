@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {
@@ -24,8 +25,8 @@ class UserController extends Controller
             'avatar' => 1,
             'password' => Hash::make($request->password),
         ]);
-
         $user->save();
+        event(new Registered($user));
 
         return response()->json(['message' => 'usuário criado com sucesso', 'user' => $user], 201);
     }

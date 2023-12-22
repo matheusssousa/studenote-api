@@ -17,7 +17,9 @@ class CategoriaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nome' => fake()->userName(),
+            'cor' => fake()->hexColor(),
+            'user_id' => 1,
         ];
     }
 }

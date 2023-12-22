@@ -10,6 +10,7 @@ use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotasController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +35,10 @@ Route::post('register', [UserController::class, 'register']);
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 Route::post('/reset-password/{token}', [ResetPasswordController::class, 'reset']);
 
-Route::middleware('jwt-auth')->group(function(){
+Route::get('verify-email/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+Route::post('email/verification-notification', [VerificationController::class, 'resend']);
+
+Route::middleware('jwt.auth')->group(function(){
     Route::apiResource('dashboard', DashboardController::class);
     Route::apiResource('comentario', ComentarioController::class);
     Route::apiResource('community', CommunityController::class);
