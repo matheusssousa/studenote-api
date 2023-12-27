@@ -103,4 +103,8 @@ class User extends Authenticatable implements JWTSubject, CanResetPassword, Must
     {
         return $this->belongsToMany(Notas::class, 'likes_notas', 'user_id', 'nota_id')->withPivot('id');
     }
+    public function favorites()
+    {
+        return $this->belongsToMany(Notas::class, 'favorites', 'user_id', 'nota_id')->withPivot('id');
+    }
 }

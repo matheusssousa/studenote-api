@@ -8,6 +8,7 @@ use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\NotasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
@@ -44,6 +45,7 @@ Route::middleware('jwt.auth')->group(function(){
     Route::apiResource('community', CommunityController::class);
     Route::apiResource('categoria', CategoriaController::class);
     Route::apiResource('disciplina', DisciplinaController::class);
+    Route::apiResource('favorite', FavoritesController::class);
 
     Route::apiResource('notas', NotasController::class);
     Route::get('notas/recentes/as', [NotasController::class, 'recentes']);

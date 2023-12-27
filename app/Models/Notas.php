@@ -34,4 +34,8 @@ class Notas extends Model
     {
         return $this->belongsToMany(User::class, 'like_notas', 'nota_id', 'user_id')->withPivot('id');
     }
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'nota_id', 'user_id')->withPivot('id');
+    }
 }
