@@ -19,12 +19,15 @@ return new class extends Migration
             $table->date('data_prazo')->nullable();
             $table->unsignedBigInteger('disciplina_id');
             $table->unsignedBigInteger('user_id');  
+            $table->unsignedBigInteger('color_id');  
             $table->boolean('annotation_community');
 
             //CHAVE ESTRANGEIRA DE USUÁRIO
             $table->foreign('user_id')->references('id')->on('users');
             //CHAVE ESTRANGEIRA DE DISCIPLINA
             $table->foreign('disciplina_id')->references('id')->on('disciplinas');
+            //CHAVE ESTRANGEIRA DE DISCIPLINA
+            $table->foreign('color_id')->references('id')->on('colors_predefineds');
         });
     }
 

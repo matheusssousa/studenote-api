@@ -53,6 +53,7 @@ class NotasController extends Controller
         $nota->data_prazo = $request->data_prazo;
         $nota->disciplina_id = $request->disciplina_id;
         $nota->annotation_community = $request->annotation_community;
+        $nota->color_id = $request->color_id;
         $nota->user_id = auth()->user()->id;
 
         $nota->save();

@@ -25,6 +25,7 @@ class StoreNotasRequest extends FormRequest
             'nome' => 'required|min:3',
             'descricao' => 'required|max:10000',
             'disciplina_id' => 'exists:disciplinas,id',
+            'color_id' => 'exists:colors_predefineds,id',
             'annotation_community' => 'boolean',
             'categorias' => 'exists:categorias,id',
             // Validar o arquivo dentro do array arquivo

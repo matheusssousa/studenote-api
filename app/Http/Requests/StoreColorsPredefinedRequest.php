@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateNotasRequest extends FormRequest
+class StoreColorsPredefinedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,7 @@ class UpdateNotasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|min:3',
-            'descricao' => 'required|max:10000',
-            'disciplina_id' => 'exists:disciplinas,id',
-            'color_id' => 'exists:colors_predefineds,id',
-            'annotation_community' => 'boolean',
-            'categorias' => 'exists:categorias,id',
-            // Validar o arquivo dentro do array arquivo
-            'arquivo.*' => 'file|mimes:png,docx,pdf,jpeg,jpg|max:3144'
+            'cor_1' => 'required',
         ];
     }
 }

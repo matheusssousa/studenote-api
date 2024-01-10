@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Notas extends Model
 {
     use HasFactory;
-    protected $fillable = ['nome', 'descricao', 'data_prazo', 'disciplina_id', 'user_id', 'annotation_community'];
+    protected $fillable = ['nome', 'descricao', 'data_prazo', 'disciplina_id', 'user_id', 'annotation_community', 'color_id'];
 
     public function usuario()
     {
@@ -37,5 +37,9 @@ class Notas extends Model
     public function favorites()
     {
         return $this->belongsToMany(User::class, 'favorites', 'nota_id', 'user_id')->withPivot('id');
+    }
+    public function colors()
+    {
+        return $this->belongsTo(ColorsPredefined::class);
     }
 }

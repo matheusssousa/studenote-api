@@ -17,23 +17,23 @@ class DashboardController extends Controller
         $dados = [
             'Notas' => [
                 'Total' => Notas::where('user_id', auth()->user()->id)->count(),
-                'Com Arquivos' => Notas::where('user_id', auth()->user()->id)->has('files')->count(),
-                'Com Datas' => Notas::where('user_id', auth()->user()->id)->whereNotNull('data_prazo')->count(),
+                'ComArquivos' => Notas::where('user_id', auth()->user()->id)->has('files')->count(),
+                'ComDatas' => Notas::where('user_id', auth()->user()->id)->whereNotNull('data_prazo')->count(),
             ],
             'UserComunidade' => [
                 'Comunidade' => Notas::where('user_id', auth()->user()->id)->where('annotation_community', 1)->count(),
-                'Com Likes' => Notas::where('user_id', auth()->user()->id)->has('likes')->count(),
-                'Com Comentarios' => Notas::where('user_id', auth()->user()->id)->has('comentarios')->count(),
-                'Com Mais Like' => Notas::select(['nome'])->where('user_id', auth()->user()->id)->withCount('likes')->orderByDesc('likes_count')->first(),
+                'ComLikes' => Notas::where('user_id', auth()->user()->id)->has('likes')->count(),
+                'ComComentarios' => Notas::where('user_id', auth()->user()->id)->has('comentarios')->count(),
+                'ComMaisLike' => Notas::select(['nome'])->where('user_id', auth()->user()->id)->withCount('likes')->orderByDesc('likes_count')->first(),
             ],
             'Categorias' => [
                 'Total' => Categoria::where('user_id', auth()->user()->id)->count(),
-                'CategoriaMaisNota' => Categoria::where('user_id', auth()->user()->id)->withCount('notas')->orderByDesc('notas_count')->first(),
+                'CategoriaMaisNota' => Categoria::select(['nome'])->where('user_id', auth()->user()->id)->withCount('notas')->orderByDesc('notas_count')->first(),
             ],
             'Disciplina' => Disciplina::select(['nome'])->withCount('notas')->orderByDesc('notas_count')->first(),
-            'Comunidade' => [
-                'Populares' => Notas::where('annotation_community', 1)->withCount('likes')->orderByDesc('likes_count')->take(3)->get(),
-            ],
+            // 'Comunidade' => [
+            //     'Populares' => Notas::where('annotation_community', 1)->withCount('likes')->orderByDesc('likes_count')->take(3)->get(),
+            // ],
         ];
 
         return response()->json($dados, 200);
